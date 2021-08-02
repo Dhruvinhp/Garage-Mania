@@ -1,11 +1,13 @@
 {% extends "buyer/base.html" %}
 {% block content %} 
 <br><br><br>
+<div align='center' >
 <h2 align='center'>You've been Logged out!</h2><br>
     <div class='border-top pt-3'>
         <div align="center">
             <a class = 'btn btn-info' href="{% url 'login' %}">Log In Again</a>
         </div>
     </div>
+</div>
 <br><br><br>
 {% endblock content %}

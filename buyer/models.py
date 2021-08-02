@@ -19,8 +19,8 @@ class Post(models.Model):
         ('C','Chassis'),
     }
     part_name = models.CharField(max_length=32, null=True)
-    car_model_name = models.CharField(max_length=32, null=True)
     brand = models.CharField(max_length=32, null=True)
+    car_model_name = models.CharField(max_length=32, null=True)
     category = models.CharField(max_length=20, choices=CATEGORY_TYPE, null=True)
     description = models.TextField()
     is_new = models.BooleanField(default=False)
@@ -28,18 +28,26 @@ class Post(models.Model):
     image = models.ImageField(default = 'default.jpg', upload_to = 'parts_pics')
     prize = models.IntegerField()
     date_posted = models.DateTimeField(default=timezone.now) 
-
+ 
     def __str__(self):
         return self.part_name
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        img = Image.open(self.image.path)
+    def get_absolute_url(self):
+        return reverse('shop-detail', kwargs={'pk':self.pk})
 
-        if img.height>300 or img.width>300:
-            output_size = (300,300)
-            img.thumbnail(output_size)
-            img.save(self.image.path)
-            
-    # def get_absolute_url(self):
-    #     return reverse('post-detail', kwargs={'pk':self.pk})
+    def get_all_products_by_categoryid(category_id):
+        if category_id:
+            return Post.objects.filter(category = category_id)
+        else:
+            return Post.get_all_products();
+
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     img = Image.open(self.image.path)
+
+    #     if img.height>300 or img.width>300:
+    #         output_size = (300,300)
+    #         img.thumbnail(output_size)
+    #         img.save(self.image.path)
+
+    

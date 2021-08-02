@@ -24,8 +24,7 @@ class PostListView(ListView):
 
 class PostDetailView(DetailView):
     model = Post
-    template_name = 'buyer/shop-single.html'
-    context_object_name = 'posts'
+    template_name = 'buyer/shop_detail.html'
 
 class IndexView(ListView):
     model = Post
@@ -47,32 +46,35 @@ class AboutView(ListView):
 
 class PostCreateView(LoginRequiredMixin, CreateView): #here we use Create View
     model = Post
-    fields = ['part_name','car_model_name', 'brand', 'category', 'description', 'is_new', 'seller', 'image', 'prize']
+    fields = ['part_name', 'brand', 'car_model_name', 'category', 'description', 'is_new', 'image', 'prize']
+    template_name = 'buyer/shop_form.html'
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.seller = self.request.user
         return super().form_valid(form)
 
 class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #here we use update View
     model = Post
-    fields = ['part_name','car_model_name', 'brand', 'category', 'description', 'is_new', 'seller', 'image', 'prize']
+    fields = ['part_name', 'brand', 'car_model_name', 'category', 'description', 'is_new', 'image', 'prize']
+    template_name = 'buyer/shop_form.html'
 
     def form_valid(self, form):
-        form.instance.author = self.request.user
+        form.instance.seller = self.request.user
         return super().form_valid(form)
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user == post.seller:
             return True
         return False
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): #here we use Delete View
     model = Post
     success_url = '/' 
+    template_name = 'buyer/shop_form.html'
 
     def test_func(self):
         post = self.get_object()
-        if self.request.user == post.author:
+        if self.request.user == post.seller:
             return True
         return False

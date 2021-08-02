@@ -1,0 +1,82 @@
+{% extends 'buyer/base.html' %}
+{% load static %}
+{% block content %}
+    <!-- Open Content -->   
+    <section class="bg-light">
+        <div class="container pb-5">
+            <div class="row">
+                <div class="col-lg-5 mt-5">
+                    <div class="card mb-3">
+                        <img class="card-img img-fluid" src="{{ post.image.url}}" alt="Card image cap" id="product-detail">
+                    </div>
+                </div>
+                <!-- col end -->
+                <div class="col-lg-7 mt-5">
+                    <div class="card">
+                        <div class="card-body">
+                            <h1 class="h2">{{ object.part_name }}</h1>
+                            <p class="h3 py-2">{{ object.prize }} <i class="fa fa-inr"></i></p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Brand:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p><strong>{{ object.brand }}</strong></p>
+                                </li>
+                            </ul>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>New?:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p><strong>{% if post.is_new == True %}
+                                        <b>Yes</b>
+                                    {% else %}
+                                        <b>No</b>
+                                    {% endif %}</strong></p>
+                                </li>
+                            </ul>   
+
+                            <h6>Description:</h6>
+                            <p>{{object.description}}</p>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Seller:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{object.seller}}</strong></p>
+                                </li>
+                            </ul> 
+
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
+                                    <h6>Posted on:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p class="text-muted"><strong>{{ object.date_posted|date:"F d, Y" }}</strong></p>
+                                </li>
+                            </ul>
+
+                            <form action="" method="GET">
+                                <input type="hidden" name="product-title" value="Activewear">
+                                <div class="row pb-3">
+                                    <div class="col d-grid">
+                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
+                                    </div>
+                                </div>
+                                {% if object.seller == user%}  
+                                    <div align='right'>
+                                        <a class='btn btn-info' href="{% url 'post-update' object.id %}">Update</a>
+                                        <a class='btn btn-danger' href="{% url 'post-delete' object.id %}">Delete</a>
+                                    </div>
+                                {% endif %}
+                            </form>
+                            <h1 align='right'><a class="article-title" href="{% url 'shop' %}">Back</a></h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Close Content -->
+{% endblock content %}
