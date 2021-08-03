@@ -1,0 +1,16 @@
+{% extends "buyer/base.html" %}
+{% block content %} 
+    <div class='content-section'>
+        <form method="POST">
+            {% csrf_token %}
+            <fieldset class='form-group' align='center'><br><br>
+                <div class="alert alert-success" role="alert">
+                    <h4>Your order has been placed! Seller will contact you soon</h4>
+                  </div>
+            </fieldset>
+            <div class='form-group' align='center'>
+                <a class='btn btn-outline-secondary' href='{% url "shop"%}'>Back to Shop</a><br><br>
+            </div>
+        </form>
+    </div>
+{% endblock content %}

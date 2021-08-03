@@ -26,14 +26,22 @@
                             </ul>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
+                                    <h6>Model:</h6>
+                                </li>
+                                <li class="list-inline-item">
+                                    <p><strong>{{ object.car_model_name }}</strong></p>
+                                </li>
+                            </ul>
+                            <ul class="list-inline">
+                                <li class="list-inline-item">
                                     <h6>New?:</h6>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p><strong>{% if post.is_new == True %}
+                                    <p>{% if post.is_new == True %}
                                         <b>Yes</b>
                                     {% else %}
                                         <b>No</b>
-                                    {% endif %}</strong></p>
+                                    {% endif %}</p>
                                 </li>
                             </ul>   
 
@@ -61,7 +69,7 @@
                                 <input type="hidden" name="product-title" value="Activewear">
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <button type="submit" class="btn btn-success btn-lg" name="submit" value="buy">Buy</button>
+                                        <a class='btn btn-success btn-lg' href="{% url 'sendEmail' %}"><strong>Buy</strong></a>
                                     </div>
                                 </div>
                                 {% if object.seller == user%}  
@@ -70,8 +78,8 @@
                                         <a class='btn btn-danger' href="{% url 'post-delete' object.id %}">Delete</a>
                                     </div>
                                 {% endif %}
+                                    <h1 align='right'><a class="btn btn-outline-info" href="{% url 'shop' %}">Back</a></h1>
                             </form>
-                            <h1 align='right'><a class="article-title" href="{% url 'shop' %}">Back</a></h1>
                         </div>
                     </div>
                 </div>

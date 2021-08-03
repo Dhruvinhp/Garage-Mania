@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Post
+from .models import Category, Post
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from .forms import UserRegisterForm
@@ -15,12 +17,28 @@ def home(request):
     }
     return render(request, 'buyer/shop.html', context)
 
-class PostListView(ListView):
-    model = Post
-    template_name = 'buyer/shop.html'
-    context_object_name = 'posts'
-    ordering = ['-date_posted']
-    paginate_by = 5
+def ShowAllProducts(request):
+    category = request.GET.get('category')
+    
+    if category == None:
+        parts = Post.objects.order_by('-prize')
+        page_num = request.GET.get("page")
+        paginator = Paginator(parts, 6)
+        try:
+            parts = paginator.page(page_num)
+        except PageNotAnInteger:
+            parts = paginator.page(1)
+        except EmptyPage:
+            parts = paginator.page(paginator.num_pages)  
+    else:
+        parts = Post.objects.filter(category__name = category)
+
+    categories = Category.objects.all()
+    context = {
+        'posts' : parts,
+        'categories' : categories
+    }
+    return render(request, 'buyer/shop.html', context)
 
 class PostDetailView(DetailView):
     model = Post
@@ -70,11 +88,22 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView): #here
 
 class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): #here we use Delete View
     model = Post
-    success_url = '/' 
-    template_name = 'buyer/shop_form.html'
+    success_url = '/shop'
 
     def test_func(self):
         post = self.get_object()
         if self.request.user == post.seller:
             return True
         return False
+
+def sendEmail(request):
+    subject = 'Garage Mania'
+    message = f'Thanks for purchasing with us, Your order is {Post.part_name}, prize of this product is {Post.prize}'
+    sender = 'dhruvin1.cilans@gmail.com'
+    receiver = ['hopeplateform@gmail.com']
+    
+    send_mail(
+        subject, message, sender, receiver, 
+        fail_silently=False
+    )
+    return render(request, 'buyer/order_confirm.html')
