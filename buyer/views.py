@@ -1,15 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render, redirect
 from .models import Category, Post
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.contrib import messages
-from .forms import UserRegisterForm
 from django.views.generic import (
     ListView, DetailView, CreateView,
     UpdateView,
     DeleteView,
 )
+from django.conf import settings
+from .forms import AddPart
 
 def home(request):
     context = {
@@ -64,7 +64,8 @@ class AboutView(ListView):
 
 class PostCreateView(LoginRequiredMixin, CreateView): #here we use Create View
     model = Post
-    fields = ['part_name', 'brand', 'car_model_name', 'category', 'description', 'is_new', 'image', 'prize']
+    form_class = AddPart
+    # fields = ['part_name', 'brand', 'car_model_name', 'category', 'description', 'is_new', 'image', 'prize']
     template_name = 'buyer/shop_form.html'
 
     def form_valid(self, form):
@@ -97,11 +98,10 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): #here
         return False
 
 def sendEmail(request):
-    subject = 'Garage Mania'
+    subject = 'Garage Mania Order Confirmed'
     message = f'Thanks for purchasing with us, Your order is {Post.part_name}, prize of this product is {Post.prize}'
-    sender = 'dhruvin1.cilans@gmail.com'
+    sender = settings.EMAIL_HOST_USER
     receiver = ['hopeplateform@gmail.com']
-    
     send_mail(
         subject, message, sender, receiver, 
         fail_silently=False

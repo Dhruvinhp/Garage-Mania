@@ -4275,13 +4275,13 @@ readers do not read off random characters that represent icons */
 .fa-user-times:before {
   content: "\f235"; }
 
-.fa-users:before {
+.fa-buyer:before {
   content: "\f0c0"; }
 
-.fa-users-cog:before {
+.fa-buyer-cog:before {
   content: "\f509"; }
 
-.fa-users-slash:before {
+.fa-buyer-slash:before {
   content: "\e073"; }
 
 .fa-usps:before {

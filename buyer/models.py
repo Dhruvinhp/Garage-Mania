@@ -21,7 +21,7 @@ class Post(models.Model):
     description = models.TextField()
     is_new = models.BooleanField(default=False)
     seller = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(default = 'default1.jpg', upload_to = 'parts_pics')
+    image = models.ImageField(default = 'default.jpg', upload_to = 'parts_pics')
     prize = models.IntegerField()
     date_posted = models.DateTimeField(default=timezone.now) 
  
@@ -30,3 +30,6 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse('shop-detail', kwargs={'pk':self.pk})
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)

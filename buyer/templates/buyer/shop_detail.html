@@ -67,11 +67,19 @@
 
                             <form action="" method="GET">
                                 <input type="hidden" name="product-title" value="Activewear">
+                                {% if user.is_authenticated %}
+                                    <div class="row pb-3">
+                                        <div class="col d-grid">
+                                            <a class='btn btn-success btn-lg' href="{% url 'sendEmail' %}"><strong>Buy</strong></a>
+                                        </div>
+                                    </div>
+                                {% else %}
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <a class='btn btn-success btn-lg' href="{% url 'sendEmail' %}"><strong>Buy</strong></a>
+                                        <a class='btn btn-success btn-lg' href="{% url 'login' %}"><strong>Buy</strong></a>
                                     </div>
                                 </div>
+                                {% endif %}
                                 {% if object.seller == user%}  
                                     <div align='right'>
                                         <a class='btn btn-info' href="{% url 'post-update' object.id %}">Update</a>
