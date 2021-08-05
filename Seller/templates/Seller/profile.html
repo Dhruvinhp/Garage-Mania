@@ -17,6 +17,7 @@
                     <legend class="border-bottom mb-4">Profile Info</legend>
                     {{ u_form|crispy }}
                     {{ p_form|crispy }}
+                    <div><table><tr><td>Seller? </td> <td>{{ role|crispy}}</td></tr></table></div>
                 </fieldset><br>
                 <div class='form-group' align='center'>
                     <button class='btn btn-info' type="submit">Update</button>

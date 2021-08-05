@@ -1,21 +1,28 @@
 from django.shortcuts import render, redirect
-# from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import Role, UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-
+ 
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
+        role = Role(request.POST)
         if form.is_valid():
-            form.save()
+            profile = form.save(commit=False)
+            profile.user = request.user
+            profile.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f"Account created for {username}, you are now able to Login!")
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'Seller/register.html', {'form':form})
+        role = Role()
+
+    context={
+        'form' : form,
+        'role': role,
+    }
+    return render(request, 'Seller/register.html', context)
 
 @login_required
 def profile(request):
@@ -32,10 +39,12 @@ def profile(request):
     else: 
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
+        role = Role(instance=request.user.profile)
 
     context = {
          'u_form':u_form,
          'p_form':p_form,
+         'role':role,
     }
 
     return render(request, 'Seller/profile.html', context)

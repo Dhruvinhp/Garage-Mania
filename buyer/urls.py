@@ -16,5 +16,5 @@ urlpatterns = [
     path('shop/new/', PostCreateView.as_view(), name='post-create'),
     path('shop/<int:pk>/update/', PostUpdateView.as_view(), name='post-update'),
     path('shop/<int:pk>/delete/', PostDeleteView.as_view(), name='post-delete'),
-    path('sendEmail/', views.sendEmail, name='sendEmail'),
+    path('sendEmail/<int:pk>', views.sendEmail, name='sendEmail'),
 ]

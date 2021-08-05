@@ -5,4 +5,4 @@ from .models import Post
 class AddPart(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['part_name', 'brand', 'car_model_name' , 'category', 'description', 'is_new' , 'image', 'prize']
+        fields = ['part_name', 'brand', 'car_model_name' , 'category', 'description', 'is_new', 'prize' , 'image']

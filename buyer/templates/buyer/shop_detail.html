@@ -68,11 +68,15 @@
                             <form action="" method="GET">
                                 <input type="hidden" name="product-title" value="Activewear">
                                 {% if user.is_authenticated %}
-                                    <div class="row pb-3">
-                                        <div class="col d-grid">
-                                            <a class='btn btn-success btn-lg' href="{% url 'sendEmail' %}"><strong>Buy</strong></a>
+                                    {% if user.profile.role %} 
+                                         
+                                    {% else %}
+                                        <div class="row pb-3">
+                                            <div class="col d-grid">
+                                                <a class='btn btn-success btn-lg' href="{% url 'sendEmail' object.pk %}"><strong>Buy</strong></a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    {% endif %}
                                 {% else %}
                                 <div class="row pb-3">
                                     <div class="col d-grid">
@@ -89,8 +93,11 @@
                                     <h1 align='right'><a class="btn btn-outline-info" href="{% url 'shop' %}">Back</a></h1>
                             </form>
                         </div>
-                    </div>
+                    </div> 
                 </div>
+            </div>
+        </div>
+    </div>
             </div>
         </div>
     </section>

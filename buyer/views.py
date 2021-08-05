@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from .models import Category, Post
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.mail import send_mail
@@ -97,11 +98,14 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): #here
             return True
         return False
 
-def sendEmail(request):
-    subject = 'Garage Mania Order Confirmed'
-    message = f'Thanks for purchasing with us, Your order is {Post.part_name}, prize of this product is {Post.prize}'
+def sendEmail(request, pk):
+    post = Post.objects.get(pk=pk)
+    user = request.user
+    subject = 'Garage Mania Order Received!'
+    message = f"Your Item has been purchased by {user.username}, Buyer's details: Emailid: {user.email}, Order Details - Part Name: {post.part_name}, Prize: {post.prize} Rs. "
     sender = settings.EMAIL_HOST_USER
-    receiver = ['hopeplateform@gmail.com']
+    receiver = {post.seller.email}
+    print(message)
     send_mail(
         subject, message, sender, receiver, 
         fail_silently=False
