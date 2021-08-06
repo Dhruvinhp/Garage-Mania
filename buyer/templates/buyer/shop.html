@@ -22,23 +22,23 @@
             <div class="col-lg-9">
                 <div class="row">
                     {% for post in posts %}
-                    <div class="col-md-4">
-                        <div class="card mb-4 product-wap rounded-0">
-                            <div class="card rounded-0">
-                                <a href="{% url 'shop-detail' post.id %}"><img class="card-img rounded-0 img-fluid" src="{{ post.image.url }}"></a>
-                            </div> 
-                            <div class="card-body">
-                                <a href=" {% url 'shop-detail' post.id %} " class="h3 text-decoration-none"><strong>{{ post.part_name }}</strong></a>
-                                <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
-                                    <li>{{ post.brand }}</li>
-                                </ul>
-                                <p class="text-center mb-0">{{post.prize}} <i class="fa fa-inr"></i></p><br>
-                                <ul class="list-unstyled" align='center'>
-                                    <a class="btn btn-success text-white" href=" {% url 'shop-detail' post.id %} "><i class="fa fa-eye"></i> Details</a>
-                                </ul>
+                        <div class="col-md-4">
+                            <div class="card mb-4 product-wap rounded-0">
+                                <div class="card rounded-0">
+                                    <a href="{% url 'shop-detail' post.id %}"><img class="card-img rounded-0 img-fluid" src="{{ post.image.url }}"></a>
+                                </div> 
+                                <div class="card-body">
+                                    <a href=" {% url 'shop-detail' post.id %} " class="h3 text-decoration-none"><strong>{{ post.part_name }}</strong></a>
+                                    <ul class="w-100 list-unstyled d-flex justify-content-between mb-0">
+                                        <li>{{ post.brand }}</li>
+                                    </ul>
+                                    <p class="text-center mb-0">{{post.prize}} <i class="fa fa-inr"></i></p><br>
+                                    <ul class="list-unstyled" align='center'>
+                                        <a class="btn btn-success text-white" href=" {% url 'shop-detail' post.id %} "><i class="fa fa-eye"></i> Details</a>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {% endfor %}
                     <div align='center'>
                         {% if posts.has_other_pages %}

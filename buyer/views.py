@@ -66,7 +66,7 @@ class AboutView(ListView):
 class PostCreateView(LoginRequiredMixin, CreateView): #here we use Create View
     model = Post
     form_class = AddPart
-    # fields = ['part_name', 'brand', 'car_model_name', 'category', 'description', 'is_new', 'image', 'prize']
+    # fields = ['part_name', 'brand', 'car_model_name', 'category', 'description', 'is_new', 'prize', 'image']
     template_name = 'buyer/shop_form.html'
 
     def form_valid(self, form):
