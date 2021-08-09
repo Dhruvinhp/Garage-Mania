@@ -24,6 +24,9 @@ class Post(models.Model):
     image = models.ImageField(default = 'default.jpg', upload_to = 'parts_pics')
     prize = models.IntegerField()
     date_posted = models.DateTimeField(default=timezone.now) 
+
+    class Meta:
+        ordering = ["-prize"]
  
     def __str__(self):
         return self.part_name
@@ -31,5 +34,3 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('shop-detail', kwargs={'pk':self.pk})
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
