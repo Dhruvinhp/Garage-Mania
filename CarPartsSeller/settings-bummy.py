@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'buyer.apps.buyerConfig',
-    'Seller.apps.SellerConfig',
+    'products.apps.productsConfig',
+    'users.apps.usersConfig',
     'crispy_forms',
     'django_cleanup',
 ]
