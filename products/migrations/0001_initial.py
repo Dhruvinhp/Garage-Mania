@@ -16,44 +16,86 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='CarPart',
+            name="CarPart",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('part_name', models.CharField(max_length=32, null=True)),
-                ('brand', models.CharField(max_length=32, null=True)),
-                ('car_model_name', models.CharField(max_length=32, null=True)),
-                ('description', models.TextField()),
-                ('is_new', models.BooleanField(default=False)),
-                ('image', models.ImageField(default='default.jpg', upload_to='parts_pics')),
-                ('prize', models.IntegerField()),
-                ('date_posted', models.DateTimeField(default=django.utils.timezone.now)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("part_name", models.CharField(max_length=32, null=True)),
+                ("brand", models.CharField(max_length=32, null=True)),
+                ("car_model_name", models.CharField(max_length=32, null=True)),
+                ("description", models.TextField()),
+                ("is_new", models.BooleanField(default=False)),
+                (
+                    "image",
+                    models.ImageField(default="default.jpg", upload_to="parts_pics"),
+                ),
+                ("prize", models.IntegerField()),
+                (
+                    "date_posted",
+                    models.DateTimeField(default=django.utils.timezone.now),
+                ),
             ],
             options={
-                'ordering': ['-prize'],
+                "ordering": ["-prize"],
             },
         ),
         migrations.CreateModel(
-            name='Category',
+            name="Category",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=35, null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=35, null=True)),
             ],
         ),
         migrations.CreateModel(
-            name='Purchase',
+            name="Purchase",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('car_part', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='products.carpart')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "car_part",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="products.carpart",
+                    ),
+                ),
             ],
         ),
         migrations.AddField(
-            model_name='carpart',
-            name='category',
-            field=models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='products.category'),
+            model_name="carpart",
+            name="category",
+            field=models.ForeignKey(
+                null=True,
+                on_delete=django.db.models.deletion.CASCADE,
+                to="products.category",
+            ),
         ),
         migrations.AddField(
-            model_name='carpart',
-            name='seller',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL),
+            model_name="carpart",
+            name="seller",
+            field=models.ForeignKey(
+                on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL
+            ),
         ),
     ]

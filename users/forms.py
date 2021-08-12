@@ -31,8 +31,6 @@ from .models import Seller, User, Buyer
 #         fields = ['image']
 
 
-
-# from django.contrib.auth.models import User
 class SellerSignupForm(UserCreationForm):
     email = forms.CharField(max_length=200)
 
@@ -43,12 +41,13 @@ class SellerSignupForm(UserCreationForm):
     def save(self):
         user = super().save(commit=False)
         user.seller = True
-        user.email = self.cleaned_data.get('email')
+        user.email = self.cleaned_data.get("email")
         user.save()
         seller = Seller.objects.create(user=user)
         seller.save()
         # print(self.cleaned_data)
         return user
+
 
 class BuyerSignupForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):

@@ -24,10 +24,11 @@ from django.urls import reverse
 #             img.thumbnail(output_size)
 #             img.save(self.image.path)
 
+
 class User(AbstractUser):
-    products = models.BooleanField(default = False)
-    seller = models.BooleanField(default = False)
-    image = models.ImageField(default = 'default2.jpg', upload_to = 'profile_pics')
+    products = models.BooleanField(default=False)
+    seller = models.BooleanField(default=False)
+    image = models.ImageField(default="default2.jpg", upload_to="profile_pics")
 
     def __str__(self):
         return self.username
@@ -39,20 +40,22 @@ class User(AbstractUser):
         super().save(*args, **kwargs)
         img = Image.open(self.image.path)
 
-        if img.height>300 or img.width>300:
-            output_size = (300,300)
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
 
+
 class Seller(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='sellers')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="sellers")
     address = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return f"users: {self.user.username}"
 
+
 class Buyer(models.Model):
-    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name='buyers')
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="buyers")
 
     def __str__(self):
         return f"Buyer: {self.user.username}"

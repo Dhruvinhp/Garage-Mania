@@ -25,7 +25,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('seller/signup/', SellerSignupView.as_view() , name='seller_signup'),
     path('buyer/signup/', BuyerSignupView.as_view(),  name='buyer_signup'),
-    path('profile/', user_views.profile, name='profile'),
+    # path('profile/', user_views.profile, name='profile'),
     path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name = 'users/logout.html'), name='logout'),
     path('', include('products.urls'))
