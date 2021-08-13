@@ -3,7 +3,7 @@ from .views import (
     IndexView,
     ContactView,
     AboutView,
-    CarPartPurchaseView,
+    # CarPartPurchaseView,
     PostDetailView,
     PostCreateView,
     PostUpdateView,
@@ -24,5 +24,5 @@ urlpatterns = [
     path("shop/new/", PostCreateView.as_view(), name="post-create"),
     path("shop/<int:pk>/update/", PostUpdateView.as_view(), name="post-update"),
     path("shop/<int:pk>/delete/", PostDeleteView.as_view(), name="post-delete"),
-    path("shop/<int:pk>/purchase", CarPartPurchaseView.as_view(), name="purchase"),
+    # path("shop/<int:pk>/purchase", CarPartPurchaseView.as_view(), name="purchase"),
 ]
