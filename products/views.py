@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
-from .models import Category, CarPart #Purchase
+from .models import Category, CarPart #, Purchase
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.core.mail import send_mail
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -15,48 +15,49 @@ from django.views.generic import (
 from django.conf import settings
 
 
-# def ShowAllProducts(request):
-#     category = request.GET.get("category")
+def ShowAllProducts(request):
+    category = request.GET.get("category")
+
+    if category == None:
+        parts = CarPart.objects.order_by("-prize")
+        page_num = request.GET.get("page")
+        paginator = Paginator(parts, 6)
+        try:
+            parts = paginator.page(page_num)
+        except PageNotAnInteger:
+            parts = paginator.page(1)
+        except EmptyPage:
+            parts = paginator.page(paginator.num_pages)
+    else:
+        parts = CarPart.objects.filter(category__name=category)
+
+    categories = Category.objects.all()
+    context = {"posts": parts, "categories": categories}
+    return render(request, "products/shop.html", context)
+
+# class ShowAllProducts(ListView):
+#     model = CarPart
+#     template_name = 'products/shop.html'
+#     paginate_by = 6
 #
-#     if category == None:
-#         parts = CarPart.objects.order_by("-prize")
-#         page_num = request.GET.get("page")
-#         paginator = Paginator(parts, 6)
-#         try:
-#             parts = paginator.page(page_num)
-#         except PageNotAnInteger:
-#             parts = paginator.page(1)
-#         except EmptyPage:
-#             parts = paginator.page(paginator.num_pages)
-#     else:
-#         parts = CarPart.objects.filter(category__name=category)
+#     # def get_queryset(self):
+#     #     return Post.objects.filter(category = 1)
+#     # def get(self, request):
+#     #     category_name = Category.objects.all()
+#     #     parts = CarPart.objects.filter(category=category_name)
+#     #     context = {
+#     #         'posts':parts,
+#     #     }
+#     #     return render(request, self.template_name, context)
 #
-#     categories = Category.objects.all()
-#     context = {"posts": parts, "categories": categories}
-#     return render(request, "products/shop.html", context)
-
-class ShowAllProducts(ListView):
-    model = CarPart
-    template_name = 'products/shop.html'
-    paginate_by = 6
-
-    # def get_queryset(self):
-    #     return Post.objects.filter(category = 1)
-    # def get(self, request):
-    #     category_name = Category.objects.all()
-    #     parts = CarPart.objects.filter(category=category_name)
-    #     context = {
-    #         'posts':parts,
-    #     }
-    #     return render(request, self.template_name, context)
-
-    def post(self, request):
-        category_name = request.POST.get('category', None)
-        parts = CarPart.objects.filter(category=category_name)
-        context = {
-                'posts':parts,
-            }
-        return render(request, self.template_name, context)
+#     def post(self, request):
+#         category_name = request.POST.get('category', None)
+#         parts = CarPart.objects.filter(category=category_name)
+#         context = {
+#                 'CarParts':parts,
+#             }
+#         print(CarPart)
+#         return render(request, self.template_name, context)
 
 # def get_queryset(self):
 #     return super().get_queryset()
@@ -155,19 +156,19 @@ class PostDeleteView(
         return False
 
 
-# def sendEmail(request, pk):
-#     post = Post.objects.get(pk=pk)
-#     user = request.user
-#     subject = 'Garage Mania Order Received!'
-#     message = f"Your Item has been purchased by {user.username}, Buyer's details: Emailid: {user.email}, Order Details - Part Name: {post.part_name}, Prize: {post.prize} Rs. "
-#     sender = settings.EMAIL_HOST_USER
-#     receiver = {post.seller.email}
-#     print(message)
-#     send_mail(
-#         subject, message, sender, receiver,
-#         fail_silently=False
-#     )
-#     return render(request, 'products/order_confirm.html')
+def itemPurchase(request, pk):
+    post = CarPart.objects.get(pk=pk)
+    user = request.user
+    subject = 'Garage Mania Order Received!'
+    message = f"Your Item has been purchased by {user.username}, Buyer's details: Emailid: {user.email}, Order Details - Part Name: {post.part_name}, Prize: {post.prize} Rs. "
+    sender = settings.EMAIL_HOST_USER
+    receiver = {post.seller.email}
+    print(message)
+    send_mail(
+        subject, message, sender, receiver,
+        fail_silently=False
+    )
+    return render(request, 'products/order_confirm.html')
 
 
 # class CarPartPurchaseView(View):

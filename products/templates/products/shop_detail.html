@@ -7,7 +7,7 @@
             <div class="row">
                 <div class="col-lg-5 mt-5">
                     <div class="card mb-3">
-                        <img class="card-img img-fluid" src="{{ post.image.url}}" alt="Card image cap" id="product-detail">
+                        <img class="card-img img-fluid" src="{{ object.image.url}}" alt="Card image cap" id="product-detail">
                     </div>
                 </div>
                 <!-- col end -->
@@ -68,19 +68,19 @@
                             <form action="" method="GET">
                                 <input type="hidden" name="product-title" value="Activewear">
                                 {% if user.is_authenticated %}
-                                    {% if user.profile.role %} 
+                                    {% if user.user_role == 0 %}
                                          
                                     {% else %}
                                         <div class="row pb-3">
                                             <div class="col d-grid">
-                                                <a class='btn btn-success btn-lg' href="{% url 'purchase' object.pk %}"><strong>Buy</strong></a>
+                                                <a class='btn btn-success btn-lg' href="{% url 'itemPurchase' object.pk %}"><strong>Buy</strong></a>
                                             </div>
                                         </div>
                                     {% endif %}
                                 {% else %}
                                 <div class="row pb-3">
                                     <div class="col d-grid">
-                                        <a class='btn btn-success btn-lg' href="{% url 'login' %}"><strong>Buy</strong></a>
+                                        <a class='btn btn-success btn-lg' href="#"><strong>Buy</strong></a>
                                     </div>
                                 </div>
                                 {% endif %}

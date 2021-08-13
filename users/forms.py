@@ -3,12 +3,6 @@ from django.db import transaction
 from django import forms
 from .models import User, Profile
 
-class UserRegisterForm(UserCreationForm):
-    email = forms.EmailField(required=True)
-    class Meta:
-        model = User
-        fields = ['username', 'email', 'password1', 'password2']
-
 class UserUpdateForm(forms.ModelForm):
     email = forms.EmailField()
 
@@ -49,6 +43,7 @@ class ProfileUpdateForm(forms.ModelForm):
 #         user.save()
 #         buyer = Buyer.objects.create(user=user)
 #         return buyer
+
 class RegisterForm(UserCreationForm):
     email = forms.CharField(max_length=200)
 

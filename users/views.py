@@ -3,7 +3,7 @@ from django.contrib import messages
 from django.urls import reverse
 from django.views.generic import CreateView, DetailView, ListView, UpdateView
 
-from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from .forms import UserUpdateForm, ProfileUpdateForm
 from .forms import RegisterForm
 from .models import User #, Seller, Buyer
 # from .forms import BuyerSignupForm, SellerSignupForm
