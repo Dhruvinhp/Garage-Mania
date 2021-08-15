@@ -1,2 +1,2 @@
 # Garage-Mania
-Car Parts Selling webapp
+Django Car Parts Selling webapp
