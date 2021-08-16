@@ -16,8 +16,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path("", IndexView.as_view(), name="home"),
-    path("shop/", views.ShowAllProducts, name="shop"),
-    # path('shop/', ShowAllProducts.as_view(), name='shop'),
+    # path("shop/", views.ShowAllProducts, name="shop"),
+    path('shop/', ShowAllProducts.as_view(), name='shop'),
     path("contact/", ContactView.as_view(), name="contact"),
     path("about/", AboutView.as_view(), name="about"),
     path("shop/<int:pk>/", PostDetailView.as_view(), name="shop-detail"),

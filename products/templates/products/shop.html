@@ -13,7 +13,7 @@
                         <ul class="collapse show list-unstyled pl-3">
                             <a class="text-decoration-none" href="{% url 'shop' %}">All</a>
                             {% for category in categories %}
-                                <li><a class="text-decoration-none" href="{% url 'shop' %}?category={{category.name}}">{{category.name}}</a></li>
+                                <li value="{{category.name}}"><a class="text-decoration-none" href="{% url 'shop' %}?category_name={{category.pk}}">{{category.name}}</a></li>
                             {% endfor %}
                         </ul>
                     </li>

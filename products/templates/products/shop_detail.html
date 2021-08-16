@@ -34,17 +34,16 @@
                             </ul>
                             <ul class="list-inline">
                                 <li class="list-inline-item">
-                                    <h6>New?:</h6>
+                                    <h6>Quality:</h6>
                                 </li>
                                 <li class="list-inline-item">
-                                    <p>{% if post.is_new == True %}
-                                        <b>Yes</b>
+                                    <p>{% if object.quality == 0%}
+                                        <b>New</b>
                                     {% else %}
-                                        <b>No</b>
+                                        <b>Old</b>
                                     {% endif %}</p>
                                 </li>
-                            </ul>   
-
+                            </ul>
                             <h6>Description:</h6>
                             <p>{{object.description}}</p>
                             <ul class="list-inline">

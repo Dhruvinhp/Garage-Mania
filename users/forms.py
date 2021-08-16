@@ -14,35 +14,6 @@ class ProfileUpdateForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['image']
-# class SellerSignupForm(UserCreationForm):
-#     email = forms.CharField(max_length=200)
-#
-#     class Meta(UserCreationForm.Meta):
-#         model = User
-#
-#     @transaction.atomic
-#     def save(self):
-#         user = super().save(commit=False)
-#         user.seller = True
-#         user.email = self.cleaned_data.get("email")
-#         user.save()
-#         seller = Seller.objects.create(user=user)
-#         seller.save()
-#         # print(self.cleaned_data)
-#         return user
-
-
-# class BuyerSignupForm(UserCreationForm):
-#     class Meta(UserCreationForm.Meta):
-#         model = User
-#
-#     @transaction.atomic
-#     def save(self):
-#         user = super().save(commit=False)
-#         user.buyer = True
-#         user.save()
-#         buyer = Buyer.objects.create(user=user)
-#         return buyer
 
 class RegisterForm(UserCreationForm):
     email = forms.CharField(max_length=200)
