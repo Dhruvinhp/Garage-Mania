@@ -35,21 +35,20 @@ from django.conf import settings
 class ShowAllProducts(ListView):
     model = CarPart
     template_name = 'products/shop.html'
-    paginate_by = 6
 
     def get(self, request):
         category_name = request.GET.get('category_name', None)
-        print(f'category_name is {category_name}')
-        parts = CarPart.objects.filter(category=category_name)
+        if category_name == None:
+            parts = CarPart.objects.all()
+        else:
+            parts = CarPart.objects.filter(category=category_name)
+
         categories = Category.objects.all()
         context = {
             "posts": parts,
             "categories": categories
         }
         return render(request, self.template_name, context)
-
-    # def get(self, request):
-    #     render(request, self.template_name)
 
 class PostDetailView(DetailView):
     model = CarPart
@@ -82,7 +81,7 @@ class PostCreateView(LoginRequiredMixin, CreateView):  # here we use Create View
         "category",
         "description",
         "quality",
-        "prize",
+        "price",
         "image",
     ]
     template_name = "products/shop_form.html"
@@ -104,7 +103,7 @@ class PostUpdateView(
         "description",
         "quality",
         "image",
-        "prize",
+        "price",
     ]
     template_name = "products/shop_form.html"
 
@@ -120,8 +119,7 @@ class PostUpdateView(
 
 
 class PostDeleteView(
-    LoginRequiredMixin, UserPassesTestMixin, DeleteView
-):  # here we use Delete View
+    LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = CarPart
     success_url = "/shop"
 

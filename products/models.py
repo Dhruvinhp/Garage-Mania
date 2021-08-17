@@ -26,21 +26,14 @@ class CarPart(models.Model):
     quality = models.IntegerField(choices=QUALITY_TYPE, default=is_new)
     seller = models.ForeignKey(to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(default="default.jpg", upload_to="parts_pics")
-    prize = models.IntegerField()
+    price = models.IntegerField()
     date_posted = models.DateTimeField(default=timezone.now)
 
     class Meta:
-        ordering = ["-prize"]
+        ordering = ["-price"]
 
     def __str__(self):
         return self.part_name
 
     def get_absolute_url(self):
         return reverse("shop-detail", kwargs={"pk": self.pk})
-
-# class Purchase(models.Model):
-#     car_part = models.ForeignKey(CarPart, on_delete=models.CASCADE)
-#     buyer = models.ForeignKey(Buyer, on_delete=models.CASCADE)
-#
-#     def __str__(self):
-#         return f"{self.car_part} is purchased by products {self.buyer}"

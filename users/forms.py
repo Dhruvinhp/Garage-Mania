@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UserModel
 from django.db import transaction
 from django import forms
 from .models import User, Profile
@@ -28,3 +28,9 @@ class RegisterForm(UserCreationForm):
         userRegister.email = self.cleaned_data.get("email")
         userRegister.save()
         return userRegister
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('user', 'image')
+
