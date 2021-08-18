@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import Category, CarPart #, Purchase
 from django.core.mail import send_mail
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views.generic import (
     ListView,
@@ -11,30 +12,11 @@ from django.views.generic import (
 )
 from django.conf import settings
 
-
-# def ShowAllProducts(request):
-#     category = request.GET.get("category")
-#
-#     if category == None:
-#         parts = CarPart.objects.order_by("-prize")
-#         page_num = request.GET.get("page")
-#         paginator = Paginator(parts, 6)
-#         try:
-#             parts = paginator.page(page_num)
-#         except PageNotAnInteger:
-#             parts = paginator.page(1)
-#         except EmptyPage:
-#             parts = paginator.page(paginator.num_pages)
-#     else:
-#         parts = CarPart.objects.filter(category__name=category)
-#
-#     categories = Category.objects.all()
-#     context = {"posts": parts, "categories": categories}
-#     return render(request, "products/shop.html", context)
-
 class ShowAllProducts(ListView):
     model = CarPart
     template_name = 'products/shop.html'
+    paginate_by = 6
+    ordering = ['price']
 
     def get(self, request):
         category_name = request.GET.get('category_name', None)
@@ -134,7 +116,7 @@ def itemPurchase(request, pk):
     post = CarPart.objects.get(pk=pk)
     user = request.user
     subject = 'Garage Mania | Order Received!'
-    message = f"Your Item has been purchased by {user.username}, Buyer's details: Email id: {user.email}, Phone number: {user.phone_number}, Order Details - Part Name: {post.part_name}, Prize: {post.prize} Rs. "
+    message = f"Your Item has been purchased by {user.username}, Buyer's details: Email id: {user.email}, Phone number: {user.phone_number}, Order Details - Part Name: {post.part_name}, Prize: {post.price} Rs. "
     sender = settings.EMAIL_HOST_USER
     receiver = {post.seller.email}
     print(message)

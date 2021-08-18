@@ -3,7 +3,6 @@ from .views import (
     IndexView,
     ContactView,
     AboutView,
-    # CarPartPurchaseView,
     PostDetailView,
     PostCreateView,
     PostUpdateView,

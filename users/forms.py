@@ -28,9 +28,3 @@ class RegisterForm(UserCreationForm):
         userRegister.email = self.cleaned_data.get("email")
         userRegister.save()
         return userRegister
-
-class ProfileForm(forms.ModelForm):
-    class Meta:
-        model = Profile
-        fields = ('user', 'image')
-
