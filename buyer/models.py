@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from django.db.models.base import Model
 from django.db.models.deletion import CASCADE
 from django.utils import timezone
-from PIL import Image
 
 from django.urls import reverse
 
